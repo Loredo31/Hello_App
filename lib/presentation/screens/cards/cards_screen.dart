@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+const cards = <Map<String, dynamic>>[
+  {'elevation': 0.0, 'label': 'Elevation 0'},
+  {'elevation': 1.0, 'label': 'Elevation 1'},
+  {'elevation': 2.0, 'label': 'Elevation 2'},
+  {'elevation': 3.0, 'label': 'Elevation 3'},
+  {'elevation': 4.0, 'label': 'Elevation 4'},
+  {'elevation': 5.0, 'label': 'Elevation 5'},
+];
+
 class CardsScreen extends StatelessWidget {
   static const String name = 'cards_screen';
   const CardsScreen({super.key});
@@ -7,93 +16,174 @@ class CardsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cards'),
-      ),
-      body: const Placeholder(),
+      appBar: AppBar(title: const Text('Cards')),
+      body: _CardsView(),
     );
   }
 }
 
+class _CardsView extends StatelessWidget {
+  const _CardsView();
 
-//import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ...cards.map(
+            (e) => _CardType1(label: e['label'], elevation: e['elevation']),
+          ),
 
-// class CardsScreen extends StatelessWidget {
-//   static const String name = 'cards_screen';
-//   const CardsScreen({super.key});
+          ...cards.map(
+            (e) => _CardType2(label: e['label'], elevation: e['elevation']),
+          ),
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Cards')),
-//       floatingActionButton: FloatingActionButton.extended(
-//         label: Text('Regresar'),
-//         icon: Icon(Icons.arrow_back_ios_new_rounded),
-//         onPressed: () => context.pop(),
-//       ),
-//       body: _CardsView(),
-//     );
-//   }
-// }
+          ...cards.map(
+            (e) => _CardType3(label: e['label'], elevation: e['elevation']),
+          ),
 
-// class _CardsView extends StatelessWidget {
-//   const _CardsView();
+          ...cards.map(
+            (e) => _CardType4(label: e['label'], elevation: e['elevation']),
+          ),
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final colors = Theme.of(context).colorScheme;
+          SizedBox(height: 50),
+        ],
+      ),
+    );
+  }
+}
 
-//     return SizedBox(
-//       width: double.infinity,
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 150),
-//         child: Wrap(
-//           spacing: 10,
-//           alignment: WrapAlignment.center,
-//           children: [
-//             ElevatedButton(onPressed: () {}, child: Text('Elevated')),
-//             ElevatedButton(onPressed: null, child: Text('Elevated Disabled')),
+class _CardType1 extends StatelessWidget {
+  final String label;
+  final double elevation;
+  const _CardType1({required this.label, required this.elevation});
 
-//             ElevatedButton.icon(
-//               onPressed: () {},
-//               label: Text('Elevated Icon'),
-//               icon: Icon(Icons.access_alarm_rounded),
-//             ),
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: elevation,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert_outlined),
+              ),
+            ),
 
-//             FilledButton(onPressed: () {}, child: Text('Filled')),
-//             FilledButton.icon(
-//               onPressed: () {},
-//               label: Text('Filled Icon'),
-//               icon: Icon(Icons.terminal),
-//             ),
+            Align(alignment: Alignment.center, child: Text(label)),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-//               OutlinedButton(onPressed: () {}, child: Text('Outline')),
-//               OutlinedButton.icon(
-//                 onPressed: () {},
-//                 label: Text('Outline'),
-//                 icon: Icon(Icons.accessibility_new),
-//               ),
+class _CardType2 extends StatelessWidget {
+  final String label;
+  final double elevation;
+  const _CardType2({required this.label, required this.elevation});
 
-//               TextButton(onPressed: () {}, child: Text('Text Buttons')),
-//               TextButton.icon(
-//                 onPressed: () {},
-//                 label: Text('Text Button'),
-//                 icon: Icon(Icons.account_balance_outlined),
-//               ),
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Card(
+      elevation: elevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        side: BorderSide(color: colors.outline),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert_outlined),
+              ),
+            ),
 
-//               IconButton(onPressed: () {}, icon: Icon(Icons.minimize)),
-//               IconButton(
-//                 onPressed: () {},
-//                 icon: Icon(Icons.minimize),
-//                 style: ButtonStyle(
-//                   backgroundColor: WidgetStatePropertyAll(colors.primary),
-//                   iconColor: WidgetStatePropertyAll(Colors.white),
-//                 ),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+            Align(alignment: Alignment.center, child: Text('$label - outline')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CardType3 extends StatelessWidget {
+  final String label;
+  final double elevation;
+  const _CardType3({required this.label, required this.elevation});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Card(
+      elevation: elevation,
+      color: colors.surfaceContainerHigh,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert_outlined),
+              ),
+            ),
+
+            Align(alignment: Alignment.center, child: Text('$label - filled')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CardType4 extends StatelessWidget {
+  final String label;
+  final double elevation;
+  const _CardType4({required this.label, required this.elevation});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Card(
+      elevation: elevation,
+      clipBehavior: Clip.hardEdge,
+      color: colors.surfaceContainerHigh,
+      child: Stack(
+        children: [
+          Image.network(
+            'https://picsum.photos/id/${elevation.toInt()}/600/200',
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerHigh,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert_outlined),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
